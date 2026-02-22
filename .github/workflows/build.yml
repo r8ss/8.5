@@ -11,6 +11,7 @@ on:
         options:
           - release
           - debug
+          - test
 
 jobs:
   build:
@@ -23,11 +24,15 @@ jobs:
       matrix:
         target: [x1s, y2s, z3s, c1s, c2s, r8s]
 
+    env:
+      RELEASE_REPO: "ArtisanROM/rom_resources"
+      GH_TOKEN: ${{ secrets.PAT }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
         with:
-          submodules: 'recursive'
+          submodules: recursive
 
       - name: Free disk space (1/3)
         run: |
@@ -43,7 +48,7 @@ jobs:
       - name: Free disk space (3/3)
         uses: rokibhasansagar/slimhub_actions@main
         with:
-          retain: 'compiler_cmake'
+          retain: compiler_cmake
 
       - name: Set up build environment
         run: |
@@ -62,9 +67,9 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v5
         with:
-          distribution: 'temurin'
-          java-version: '21'
-          cache: 'gradle'
+          distribution: temurin
+          java-version: 21
+          cache: gradle
 
       - name: Build dependencies
         run: |
@@ -94,77 +99,122 @@ jobs:
       - name: Add swapspace
         uses: thejerrybao/setup-swap-space@v1
         with:
-           swap-space-path: /swapfile
-           swap-size-gb: 12
-           remove-existing-swap-files: true
+          swap-space-path: /swapfile
+          swap-size-gb: 12
+          remove-existing-swap-files: true
 
       - name: Build ROM
         run: |
           source ./buildenv.sh ${{ matrix.target }}
           ./scripts/make_rom.sh --force
 
-      - name: Upload build to Pixeldrain and Handle XML
+      - name: Upload to Pixeldrain, GitHub Release, Split, XML
         env:
           PIXELDRAIN_API_KEY: ${{ secrets.PD_API }}
+          GH_TOKEN: ${{ secrets.PAT }}
+          RELEASE_REPO: "ArtisanROM/rom_resources"
           BUILD_TYPE: ${{ github.event.inputs.build_type }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Uploading ROM files to Pixeldrain..."
+          mkdir -p split_tmp
 
           for file in out/*.zip; do
-            if [ -f "$file" ]; then
-              FILE_NAME=$(basename "$file")
-              FILE_SIZE=$(stat -c%s "$file")
-              FILE_MD5=$(md5sum "$file" | awk '{print $1}')
-              VERSION=$(echo "$FILE_NAME" | grep -oP '\d+\.\d+\.\d+')
-              BUILD_DATE=$(date +%Y-%m-%d)
-
-              RESPONSE=$(curl -s -T "$file" -u :$PIXELDRAIN_API_KEY https://pixeldrain.com/api/file/)
-              FILE_ID=$(echo $RESPONSE | jq -r '.id')
-              DOWNLOAD_URL="https://pixeldrain.com/u/$FILE_ID"
-
-              echo ""
-              echo "File: $FILE_NAME"
-              echo "Size (bytes): $FILE_SIZE"
-              echo "MD5: $FILE_MD5"
-              echo "Download: $DOWNLOAD_URL"
-              echo ""
-
-              if [ "$BUILD_TYPE" = "release" ]; then
-                echo "Release build detected — updating XML..."
-
-                git clone https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} updater_repo
-                cd updater_repo
-                git checkout main
-
-                mkdir -p updater
-                XML_FILE="updater/${{ matrix.target }}.xml"
-
-                echo '<?xml version="1.0" encoding="UTF-8"?>' > $XML_FILE
-                echo '<roms>' >> $XML_FILE
-                echo '    <rom channel="stable">' >> $XML_FILE
-                echo "        <version>$VERSION</version>" >> $XML_FILE
-                echo "        <date>$BUILD_DATE</date>" >> $XML_FILE
-                echo "        <filename>$FILE_NAME</filename>" >> $XML_FILE
-                echo "        <url>$DOWNLOAD_URL</url>" >> $XML_FILE
-                echo "        <md5>$FILE_MD5</md5>" >> $XML_FILE
-                echo "        <size>$FILE_SIZE</size>" >> $XML_FILE
-                echo '    </rom>' >> $XML_FILE
-                echo '</roms>' >> $XML_FILE
-
-                git config user.name "github-actions[bot]"
-                git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-                git add $XML_FILE
-                git commit -m "updater: ${{ matrix.target }}.xml: Update to $VERSION" || echo "No changes to commit"
-                git pull --rebase origin main
-                git push origin main
-
-                cd ..
-              else
-                echo "Debug build selected - skipping XML generation."
-              fi
-            else
+            if [ ! -f "$file" ]; then
               echo "No ZIP files found to upload."
+              continue
+            fi
+
+            FILE_NAME=$(basename "$file")
+            FILE_SIZE=$(stat -c%s "$file")
+            FILE_MD5=$(md5sum "$file" | awk '{print $1}')
+            VERSION=$(echo "$FILE_NAME" | grep -oP '\d+\.\d+\.\d+')
+            BUILD_DATE=$(date +%Y-%m-%d)
+
+            # Always upload to Pixeldrain
+            echo "Uploading $FILE_NAME to Pixeldrain..."
+            RESPONSE=$(curl -s -T "$file" -u :$PIXELDRAIN_API_KEY https://pixeldrain.com/api/file/)
+            FILE_ID=$(echo "$RESPONSE" | jq -r '.id')
+            PIXEL_URL="https://pixeldrain.com/u/$FILE_ID"
+            echo "Pixeldrain URL: $PIXEL_URL"
+
+            # Split + GitHub Release for release + test
+            PART_LINKS=()
+            if [ "$BUILD_TYPE" = "release" ] || [ "$BUILD_TYPE" = "test" ]; then
+              echo "Splitting $FILE_NAME into 6 parts..."
+              cd split_tmp
+              split -d -n 6 "../$file" "${FILE_NAME}.part_"
+              cd ..
+
+              TAG_NAME="v$VERSION-${{ matrix.target }}"
+              RELEASE_NAME="${VERSION}-${{ matrix.target }}-${BUILD_DATE}"
+
+              echo "Creating GitHub Release: $RELEASE_NAME"
+
+              RELEASE_DATA=$(jq -n \
+                --arg tag "$TAG_NAME" \
+                --arg name "$RELEASE_NAME" \
+                '{ tag_name: $tag, name: $name, draft: false, prerelease: false }')
+
+              RELEASE_RESPONSE=$(curl -s -X POST \
+                -H "Authorization: token $GH_TOKEN" \
+                -H "Content-Type: application/json" \
+                -d "$RELEASE_DATA" \
+                https://api.github.com/repos/$RELEASE_REPO/releases)
+
+              RELEASE_ID=$(echo "$RELEASE_RESPONSE" | jq -r '.id')
+              if [ "$RELEASE_ID" = "null" ]; then
+                echo "ERROR: Release not created. Check GH_TOKEN and permissions."
+                exit 1
+              fi
+              echo "Release created: $RELEASE_ID"
+
+              # Upload all split parts
+              for part in split_tmp/*; do
+                PART_NAME=$(basename "$part")
+                UPLOAD_RESPONSE=$(curl -s -X POST \
+                  -H "Authorization: token $GH_TOKEN" \
+                  -H "Content-Type: application/octet-stream" \
+                  --data-binary @"$part" \
+                  "https://uploads.github.com/repos/$RELEASE_REPO/releases/$RELEASE_ID/assets?name=$PART_NAME")
+                PART_URL=$(echo "$UPLOAD_RESPONSE" | jq -r '.browser_download_url')
+                PART_LINKS+=("$PART_URL")
+              done
+            fi
+
+            # Generate OTA XML for release only
+            if [ "$BUILD_TYPE" = "release" ]; then
+              echo "Generating OTA XML..."
+              git clone https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} updater_repo
+              cd updater_repo
+              git checkout main
+              mkdir -p updater
+              XML_FILE="updater/${{ matrix.target }}.xml"
+
+              {
+                echo '<?xml version="1.0" encoding="UTF-8"?>'
+                echo '<roms>'
+                echo '  <rom channel="stable">'
+                echo "    <version>$VERSION</version>"
+                echo "    <date>$BUILD_DATE</date>"
+                echo "    <filename>$FILE_NAME</filename>"
+              } > $XML_FILE
+
+              INDEX=1
+              for url in "${PART_LINKS[@]}"; do
+                echo "    <part$INDEX>$url</part$INDEX>" >> $XML_FILE
+                INDEX=$((INDEX+1))
+              done
+
+              {
+                echo "    <md5>$FILE_MD5</md5>"
+                echo "    <size>$FILE_SIZE</size>"
+                echo '  </rom>'
+                echo '</roms>'
+              } >> $XML_FILE
+
+              git add $XML_FILE
+              git commit -m "updater: ${{ matrix.target }}.xml: Update to $VERSION" || true
+              git pull --rebase origin main
+              git push origin main
+              cd ..
             fi
           done
