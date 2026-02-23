@@ -1,5 +1,15 @@
 # ExtremeROM changelog
 
+# 3.0.5
+- Add Viper4Android
+- Add more apps to debloat
+- Fix RAM Plus (thx @GhasemzadehFard-Dev)
+- Fix termux reboot on kill (thx @GhasemzadehFard-Dev)
+- Fix Face Recognition on r8s (thx @GhasemzadehFard-Dev)
+- Bypass CSC and fix Hiya (thx @GhasemzadehFard-Dev)
+- Keep optics and prism EXT4 (thx @GhasemzadehFard-Dev)
+- This update would not be possible without @GhasemzadehFard-Dev
+
 # 3.0.1
 - Fixed reboot on call end (thx @GhasemzadehFard-Dev)
 - Add logo and fix bugs in the updater app
