@@ -36,7 +36,9 @@ if [[ "$TARGET_CODENAME" != "r8s" ]]; then
     ADD_TO_WORK_DIR "p3sxxx" "vendor" "bin/hw/wpa_supplicant"
 fi
 
-# Light HAL
+# ==========================================
+# 3. Light HAL (Blocked for r8s to ensure stability)
+# ==========================================
 if [[ "$TARGET_CODENAME" != "r8s" ]]; then
     ADD_TO_WORK_DIR "p3sxxx" "vendor" "bin/hw/vendor.samsung.hardware.light-service"
     ADD_TO_WORK_DIR "p3sxxx" "vendor" "lib64/android.hardware.light-V1-ndk_platform.so"

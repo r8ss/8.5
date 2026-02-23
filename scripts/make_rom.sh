@@ -218,6 +218,19 @@ if $BUILD_ROM; then
             echo ">> ERROR: SemCscFeature.smali not found. Skipping Smali Patch."
         fi
         # =======================================================
+        # GhasemzadehFard-Dev SystemUI Bypass Patch
+        # =======================================================
+        echo ">> Injecting SystemUI SensorPrivacy Patch..."
+        TARGET_SMALI="$APKTOOL_DIR/system_ext/priv-app/SystemUI/SystemUI.apk/smali_classes3/com/android/systemui/settings/brightness/BrightnessDetailAdapter.smali"
+        MY_CUSTOM_PATCH="custom_injects/SystemUI/BrightnessDetailAdapter_Bypass.smali"
+        
+        if [ -f "$MY_CUSTOM_PATCH" ] && [ -f "$TARGET_SMALI" ]; then
+            cp -f "$MY_CUSTOM_PATCH" "$TARGET_SMALI"
+            echo ">> SystemUI Patch Applied Successfully!"
+        else
+            echo ">> WARNING: Custom patch file not found! Skipping..."
+        fi
+        # =======================================================
         while IFS= read -r f; do
             f="${f/$APKTOOL_DIR\//}"
             PARTITION="$(cut -d "/" -f 1 -s <<< "$f")"
