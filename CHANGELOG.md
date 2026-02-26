@@ -1,5 +1,12 @@
 # ExtremeROM changelog
 
+# 3.0.6
+- This update was made possible thx to @Ghasemzadehfard-Dev
+- Fix SvstemUI crash on r8s (thx @GhasemzadehFard-Dev)
+- Fix Termux Crash (thx @chasemzadehFard-Dev)
+- Add RAM Plus fully to r8s (thx @GhasemzadehFard-Dev)
+- Add S26U fake device image
+
 # 3.0.5
 - Add Viper4Android
 - Add more apps to debloat
