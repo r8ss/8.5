@@ -22,6 +22,7 @@
 - Add logo and fix bugs in the updater app
 - Add and enable native smart call and hiya globally throughout the ROM
 - Remove Enhanced Open option from hotspot settings as it caused issues on exynos 990 devices
+- Updated base firmware to S25 FE February Security Patch
 
 # 3.0.0
 - Switch to S25FE base
