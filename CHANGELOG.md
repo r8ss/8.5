@@ -6,6 +6,7 @@
 - Fix Termux Crash (thx @chasemzadehFard-Dev)
 - Add RAM Plus fully to r8s (thx @GhasemzadehFard-Dev)
 - Add S26U fake device image
+- Updated base firmware to S25 FE February Security Patch
 
 # 3.0.5
 - Add Viper4Android
@@ -22,7 +23,6 @@
 - Add logo and fix bugs in the updater app
 - Add and enable native smart call and hiya globally throughout the ROM
 - Remove Enhanced Open option from hotspot settings as it caused issues on exynos 990 devices
-- Updated base firmware to S25 FE February Security Patch
 
 # 3.0.0
 - Switch to S25FE base
