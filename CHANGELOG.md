@@ -2,6 +2,7 @@
 
 # 3.0.7
 - Fix USB Audio
+- Add Multi User Support
 
 # 3.0.6
 - This update was made possible thx to @Ghasemzadehfard-Dev
