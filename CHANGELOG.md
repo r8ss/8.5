@@ -1,5 +1,8 @@
 # ExtremeROM changelog
 
+# 3.0.7
+- Fix USB Audio
+
 # 3.0.6
 - This update was made possible thx to @Ghasemzadehfard-Dev
 - Fix SvstemUI crash on r8s (thx @GhasemzadehFard-Dev)
