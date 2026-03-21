@@ -119,8 +119,8 @@ if [[ "$(GET_FP_SENSOR_TYPE "$TARGET_FP_SENSOR_CONFIG")" == "optical" ]]; then
     done
 fi
 
-# if ! $SOURCE_HAS_QHD_DISPLAY; then
-#     if $TARGET_HAS_QHD_DISPLAY; then
+if ! $SOURCE_HAS_QHD_DISPLAY; then
+    if $TARGET_HAS_QHD_DISPLAY; then
 #         LOG_STEP_IN "- Applying multi resolution patches"
 # 
 #         DECODE_APK "system" "system/framework/framework.jar"
@@ -129,6 +129,10 @@ fi
 # 
 #         ADD_TO_WORK_DIR "$MODPATH/resolution/system" "system" "."
 #         ADD_TO_WORK_DIR "e2sxxx" "system" "media"
+#       temp bootanim workaround
+        ADD_TO_WORK_DIR "e2sxxx" "system" "system/media/bootsamsung.qmg"
+        ADD_TO_WORK_DIR "e2sxxx" "system" "system/media/bootsamsungloop.qmg"
+        ADD_TO_WORK_DIR "e2sxxx" "system" "system/media/shutdown.qmg"
 #         APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/resolution/framework.jar/0001-Enable-FW_DYNAMIC_RESOLUTION_CONTROL.patch"
 #         APPLY_PATCH "system" "system/framework/gamemanager.jar" "$SRC_DIR/unica/patches/product_feature/resolution/gamemanager.jar/0001-Enable-dynamic-resolution-control.patch"
 #         SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_COMMON_CONFIG_DYN_RESOLUTION_CONTROL" "WQHD,FHD,HD"
