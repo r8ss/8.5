@@ -4,8 +4,8 @@ Date: Fri, 27 Mar 2026 18:11:28 +0100
 Subject: [PATCH] Update strings.xml with new values
 
 ---
- .../strings.xml | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../strings.xml | 6 ++++----
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/strings.xml b/strings.xml
 index f306859..c4a6121 100644
@@ -29,15 +29,6 @@ index f306859..c4a6121 100644
      <string name="sec_bluetooth_left">Left earbud</string>
      <string name="sec_bluetooth_map_acceptance_dialog_text">"A Bluetooth device (%1$s) wants to access your messages.
  
-@@ -9894,7 +9894,7 @@ Employers often use device admin apps to protect work-related data. You should o
-     <string name="sec_double_tap_to_sleep_title">Double tap to turn off screen</string>
-     <string name="sec_download_and_install">Download and install</string>
-     <string name="sec_downtime_change_case">Do not disturb on. Current time in range of start time.</string>
--    <string name="sec_downtime_change_open_case">Do not disturb enabled. Current time is between start and end times.</string>
-+    <string name="sec_downtime_change_open_case"> </string>
-     <string name="sec_draw_pattern_WC">Draw pattern</string>
-     <string name="sec_draw_pattern_strong_auth_fingerprint_SF">Draw your pattern, as required by the security policy, instead of using your fingerprints</string>
-     <string name="sec_dualclock_settings_summary">Change to digital clocks showing both local and home time zones when roaming.</string>
 @@ -11046,7 +11046,7 @@ Critical updates may be downloaded using mobile data even if you choose Never or
      <string name="sec_software_update_last_software_information_title">Last update</string>
      <string name="sec_software_update_suggestion_title">Software update is available</string>
