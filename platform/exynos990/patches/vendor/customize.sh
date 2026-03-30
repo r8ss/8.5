@@ -28,16 +28,7 @@ ADD_TO_WORK_DIR "p3sxxx" "vendor" "etc/init"
 ADD_TO_WORK_DIR "p3sxxx" "vendor" "etc/vintf"
 
 # ==========================================
-# 2. TERMUX STABILITY FIX (The Exclusion)
-# We exclude ONLY wpa_supplicant for r8s to fix Issue #70 (Kernel Panic)
-# ==========================================
-if [[ "$TARGET_CODENAME" != "r8s" ]]; then
-    # This binary from p3sxxx is unstable on S20 FE (r8s)
-    ADD_TO_WORK_DIR "p3sxxx" "vendor" "bin/hw/wpa_supplicant"
-fi
-
-# ==========================================
-# 3. Light HAL (Blocked for r8s to ensure stability)
+# 2. Light HAL (Blocked for r8s to ensure stability)
 # ==========================================
 if [[ "$TARGET_CODENAME" != "r8s" ]]; then
     ADD_TO_WORK_DIR "p3sxxx" "vendor" "bin/hw/vendor.samsung.hardware.light-service"
