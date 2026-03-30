@@ -2,27 +2,27 @@
   <img loading="lazy" src="readme-res/banner.png"/>
 </h1>
 <p align="center">
-  <a href="https://github.com/ArtisanROM/ExtremeROM-Revived/blob/sixteen/LICENSE"><img loading="lazy" src="https://img.shields.io/github/license/ArtisanROM/ExtremeROM-Revived?style=for-the-badge&logo=github"/></a>
-  <a href="https://github.com/ArtisanROM/ExtremeROM-Revived/commits/sixteen"><img loading="lazy" src="https://img.shields.io/github/last-commit/ArtisanROM/ExtremeROM-Revived/sixteen?style=for-the-badge"/></a>
-  <a href="https://github.com/ArtisanROM/ExtremeROM-Revived/stargazers"><img loading="lazy" src="https://img.shields.io/github/stars/ArtisanROM/ExtremeROM-Revived?style=for-the-badge"/></a>
-  <a href="https://github.com/ArtisanROM/ExtremeROM-Revived/graphs/contributors"><img loading="lazy" src="https://img.shields.io/github/contributors/ArtisanROM/ExtremeROM-Revived?style=for-the-badge"/></a>
+  <a href="https://github.com/ArtisanROM/ArtisanROM/blob/sixteen/LICENSE"><img loading="lazy" src="https://img.shields.io/github/license/ArtisanROM/ArtisanROM?style=for-the-badge&logo=github"/></a>
+  <a href="https://github.com/ArtisanROM/ArtisanROM/commits/sixteen"><img loading="lazy" src="https://img.shields.io/github/last-commit/ArtisanROM/ArtisanROM/sixteen?style=for-the-badge"/></a>
+  <a href="https://github.com/ArtisanROM/ArtisanROM/stargazers"><img loading="lazy" src="https://img.shields.io/github/stars/ArtisanROM/ArtisanROM?style=for-the-badge"/></a>
+  <a href="https://github.com/ArtisanROM/ArtisanROM/graphs/contributors"><img loading="lazy" src="https://img.shields.io/github/contributors/ArtisanROM/ArtisanROM?style=for-the-badge"/></a>
 </p>
-<p align="center">ExtremeROM Quant is a work-in-progress custom firmware for Samsung Galaxy devices.</p>
+<p align="center">ArtisanROM Quant is a work-in-progress custom firmware for Samsung Galaxy devices.</p>
 
 <p align="center">
-  <a  href="https://github.com/ArtisanROM/ExtremeROM-Revived/wiki">📖 Wiki</a>
-  <a href="https://github.com/ArtisanROM/ExtremeROM-Revived/blob/sixteen/CHANGELOG.md">📝 Changelog</a>
-  <a href="https://github.com/ArtisanROM/ExtremeROM-Revived/blob/sixteen/MAINTAINERS">🧑‍💻 Maintainers</a>
+  <a  href="https://github.com/ArtisanROM/ArtisanROM/wiki">📖 Wiki</a>
+  <a href="https://github.com/ArtisanROM/ArtisanROM/blob/sixteen/CHANGELOG.md">📝 Changelog</a>
+  <a href="https://github.com/ArtisanROM/ArtisanROM/blob/sixteen/MAINTAINERS">🧑‍💻 Maintainers</a>
 </p>
 
-# What is ExtremeROM Quant?
-ExtremeROM Quant is a work-in-progress custom firmware for Samsung Galaxy devices.
+# What is ArtisanROM Quant?
+ArtisanROM Quant is a work-in-progress custom firmware for Samsung Galaxy devices.
 
 It's based on the latest and greatest iteration of Samsung's UX and it also includes additional features and tweaks to ensure the best possible experience out of the box.
 
-It is based on the UN1CA build system which allows automatic downloading/extraction of the firmware, applying the required patches and generating a flashable zip package for the specified target device.
+It is based on the ExtremeROM and UN1CA build system which allows automatic downloading/extraction of the firmware, applying the required patches and generating a flashable zip package for the specified target device.
 
-ExtremeROM Quant supports devices using the Exynos 990 SoC
+ArtisanROM Quant supports devices using the Exynos 990 & Exynos 9820 SoCs
 
 Any form of contribution, suggestions, bug report or feature request for the project will be welcome.
 
@@ -56,7 +56,7 @@ Any form of contribution, suggestions, bug report or feature request for the pro
 - More that I can't remember right now and will have to be added in the future
 
 # Bugs
-See the <a href="https://github.com/ArtisanROM/ExtremeROM-Revived/issues">⚠ Issues</a> tab
+See the <a href="https://github.com/ArtisanROM/ArtisanROM/issues">⚠ Issues</a> tab
 
 # Licensing
 This project is licensed under the terms of the [GNU General Public License v3.0](LICENSE). External dependencies might be distributed under a different license, such as:
@@ -88,7 +88,7 @@ This project is licensed under the terms of the [GNU General Public License v3.0
 
 # Credits:
 - **[salvogiangri](https://github.com/salvogiangri)** for the UN1CA build system, OneUI patches, and general help and support while developing
-- **[ExtremeXT](https://github.com/ExtremeXT)** for helping me fix bugs, supporting me and most importantly letting me keep his brand image.
+- **[ExtremeXT](https://github.com/ExtremeXT)** for helping me fix bugs and giving me support.
 - **[GhasemzadehFard-Dev](https://github.com/GhasemzadehFard-Dev)** for helping fix many bugs I was not able to fix.
 - **[Mesazane](https://github.com/Mesazane)** for testing and helping with the updaters design, and for updating and fixing KernelSU-Next on the Kernels
 - **[ricci205GTI](https://github.com/ricci205GTI)** for fixing motion photo and help with the x1s.
@@ -139,10 +139,8 @@ A big thanks goes to the following for their invaluable contributions in no part
 - *All the UN1CA project contributors and testers ❤️*
 
 # Kernel sources and device trees
-- 990 Kernel Source Code (Maintainer: @ExtremeXT): https://github.com/Android-Artisan/android_kernel_samsung_exynos990
-- 990 Device Tree Code (Maintainer: @ExtremeXT): https://github.com/Android-Artisan/android_device_samsung_exynos990
-- 2100 Kernel Source Code (Maintainer: @xfwdrev/@maximusXZ): https://github.com/xfwdrev/android_kernel_samsung_ex2100
-- 2100 Device Tree Code (Maintainer: @xfwdrev/@maximusXZ): https://github.com/Android-Artisan/android_device_samsung_exynos2100
+- 990 Kernel Source Code (Maintainer: @Android Artisan): https://github.com/Android-Artisan/android_kernel_samsung_exynos990
+- 990 Device Tree Code (Maintainer: @Android Artisan): https://github.com/Android-Artisan/android_device_samsung_exynos990
 
 # Stargazers over time
-[![Stargazers over time](https://starchart.cc/ArtisanROM/ExtremeROM-Revived.svg?variant=adaptive)](https://starchart.cc/ArtisanROM/ExtremeROM-Revived)
+[![Stargazers over time](https://starchart.cc/ArtisanROM/ArtisanROM.svg?variant=adaptive)](https://starchart.cc/ArtisanROM/ArtisanROM)
