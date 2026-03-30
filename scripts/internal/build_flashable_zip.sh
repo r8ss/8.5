@@ -32,10 +32,10 @@ $ROM_IS_OFFICIAL && ROM_STATUS="OFFICIAL"
 ZIP_FILE_SUFFIX="-sign.zip"
 $DEBUG && ! $ROM_IS_OFFICIAL && ZIP_FILE_SUFFIX=".zip"
 
-FILE_NAME="ExtremeROM_${ROM_STATUS}_${ROM_VERSION}_$(date +%Y%m%d)_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
+FILE_NAME="ArtisanROM_${ROM_STATUS}_${ROM_VERSION}_$(date +%Y%m%d)_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
 while [ -f "$OUT_DIR/$FILE_NAME" ]; do
     INCREMENTAL=$((INCREMENTAL + 1))
-    FILE_NAME="ExtremeROM_${ROM_VERSION}_$(date +%Y%m%d)-${INCREMENTAL}_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
+    FILE_NAME="ArtisanROM_${ROM_VERSION}_$(date +%Y%m%d)-${INCREMENTAL}_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
 done
 
 PRIVATE_KEY_PATH="$SRC_DIR/security/"
@@ -582,9 +582,9 @@ PRINT_HEADER()
     echo    'ui_print(" ");'
     echo    'ui_print("****************************************************");'
     echo -n 'ui_print("'
-    echo -n "Welcome to ExtremeROM $ROM_CODENAME $ROM_VERSION for $TARGET_NAME!"
+    echo -n "Welcome to ArtisanROM $ROM_CODENAME $ROM_VERSION for $TARGET_NAME!"
     echo    '");'
-    echo    'ui_print("ExtremeROM Revived developed by Android-Artisan @XDAforums");'
+    echo    'ui_print("ArtisanROM developed by Android Artisan @XDAforums");'
     echo    'ui_print("ExtremeROM developed by ExtremeXT @XDAforums");'
     echo    'ui_print("Initial UN1CA build system coded by salvo_giangri @XDAforums");'
     echo    'ui_print("Special thanks to all ExtremeROM Maintainers, Contribuitors and Testers");'
