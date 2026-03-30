@@ -1,5 +1,16 @@
 # ExtremeROM changelog
 
+# 3.1.0
+- Add S10 Series (Exynos9820)
+- Add Custom ExtremeROM Ringtones and Startup/Shutdown sounds (thx @Ronan & Lindir Music)
+- Update KernelSU-Next version to 3.1.0 (thx @Mesazane)
+- Fix Boot Animation
+- Fix 120hz refresh rate
+- Add Software Update button in Settings app to directly open the Updater App (thx @salvogiangri)
+- Add ArtisanROM Settings in Updater app (NEW Settings screen to turn features on or off.)
+- Add Vulkan Rendering (Experimental) (thx @salvogiangri)
+- Switch to EXT4
+
 # 3.0.7
 - Fix USB Audio
 - Add Multi User Support
@@ -8,7 +19,7 @@
 # 3.0.6
 - This update was made possible thx to @Ghasemzadehfard-Dev
 - Fix SvstemUI crash on r8s (thx @GhasemzadehFard-Dev)
-- Fix Termux Crash (thx @chasemzadehFard-Dev)
+- Fix Termux Crash on r8s (thx @chasemzadehFard-Dev)
 - Add RAM Plus fully to r8s (thx @GhasemzadehFard-Dev)
 - Add S26U fake device image
 - Updated base firmware to S25 FE February Security Patch
