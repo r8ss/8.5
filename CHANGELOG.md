@@ -10,6 +10,8 @@
 - Add ArtisanROM Settings in Updater app (NEW Settings screen to turn features on or off.)
 - Add Vulkan Rendering (Experimental) (thx @salvogiangri)
 - Switch to EXT4
+- Update Viper4Android to latest
+- Fix Termux Crash on all 990 devices
 
 # 3.0.7
 - Fix USB Audio
