@@ -29,6 +29,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: main
 
       - name: Set up environment
         run: |
@@ -36,6 +39,7 @@ jobs:
           sudo apt install -y jq curl
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Source build environment to get TARGET_ASSERT_MODEL and other vars
           source ./buildenv.sh $BUILD_TARGET
 
       - name: Generate OTA XML
@@ -44,8 +48,8 @@ jobs:
           FILE_NAME="ExtremeROM_OFFICIAL_3.0.7_20260315_${BUILD_TARGET}-sign.zip"
           FILE_MD5="placeholder_md5"
           FILE_SIZE=123456789
-          
-          # Generate placeholder part links
+
+          # Placeholder part links
           PART_LINKS=()
           for i in $(seq 0 5); do
             PART_LINKS+=("https://example.com/${FILE_NAME}.part_$(printf '%02d' $i)")
@@ -61,7 +65,7 @@ jobs:
             echo "    <filename>$FILE_NAME</filename>"
           } > $XML_FILE
 
-          # Add the placeholder parts
+          # Add placeholder part links
           INDEX=1
           for url in "${PART_LINKS[@]}"; do
             echo "    <part$INDEX>$url</part$INDEX>" >> $XML_FILE
@@ -74,7 +78,7 @@ jobs:
             echo '  </rom>'
           } >> $XML_FILE
 
-          # Add kernel blocks for each model
+          # Add kernel blocks for each model from buildenv.sh
           for MODEL in "${TARGET_ASSERT_MODEL[@]}"; do
             CLEAN_MODEL="${MODEL#SM-}"
             KERNEL_VERSION="3.1.0"
@@ -98,6 +102,8 @@ jobs:
 
       - name: Commit and push XML
         run: |
+          git fetch origin main
+          git checkout main
           git add $XML_FILE
           git commit -m "Update $XML_FILE with placeholder parts and kernel blocks for $BUILD_TARGET" || echo "No changes to commit"
           git push origin main
