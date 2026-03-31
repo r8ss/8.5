@@ -1,0 +1,103 @@
+name: Generate OTA XML Only
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: "Build type"
+        required: true
+        default: "release"
+        type: choice
+        options:
+          - release
+          - debug
+          - test
+
+jobs:
+  xml_update:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+
+    env:
+      GH_TOKEN: ${{ secrets.PAT }}
+      RELEASE_REPO: "ArtisanROM/rom_resources"
+      BUILD_TARGET: y2s
+      XML_FILE: test.xml
+      BUILD_TYPE: ${{ github.event.inputs.build_type }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up environment
+        run: |
+          sudo apt update
+          sudo apt install -y jq curl
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          source ./buildenv.sh $BUILD_TARGET
+
+      - name: Generate OTA XML
+        run: |
+          BUILD_DATE=$(date +%Y-%m-%d)
+          FILE_NAME="ExtremeROM_OFFICIAL_3.0.7_20260315_${BUILD_TARGET}-sign.zip"
+          FILE_MD5="placeholder_md5"
+          FILE_SIZE=123456789
+          
+          # Generate placeholder part links
+          PART_LINKS=()
+          for i in $(seq 0 5); do
+            PART_LINKS+=("https://example.com/${FILE_NAME}.part_$(printf '%02d' $i)")
+          done
+
+          # Start writing XML
+          {
+            echo '<?xml version="1.0" encoding="UTF-8"?>'
+            echo '<roms>'
+            echo '  <rom channel="stable">'
+            echo "    <version>3.0.7</version>"
+            echo "    <date>$BUILD_DATE</date>"
+            echo "    <filename>$FILE_NAME</filename>"
+          } > $XML_FILE
+
+          # Add the placeholder parts
+          INDEX=1
+          for url in "${PART_LINKS[@]}"; do
+            echo "    <part$INDEX>$url</part$INDEX>" >> $XML_FILE
+            INDEX=$((INDEX+1))
+          done
+
+          {
+            echo "    <md5>$FILE_MD5</md5>"
+            echo "    <size>$FILE_SIZE</size>"
+            echo '  </rom>'
+          } >> $XML_FILE
+
+          # Add kernel blocks for each model
+          for MODEL in "${TARGET_ASSERT_MODEL[@]}"; do
+            CLEAN_MODEL="${MODEL#SM-}"
+            KERNEL_VERSION="3.1.0"
+            KERNEL_FILENAME="ArtisanKRNL-v${KERNEL_VERSION}_${BUILD_TARGET}_${CLEAN_MODEL}.zip"
+            KERNEL_LINK="https://example.com/$KERNEL_FILENAME"
+            KERNEL_MD5="placeholder_md5"
+            KERNEL_SIZE=123456789
+
+            echo "  <kernel channel=\"$CLEAN_MODEL\">" >> $XML_FILE
+            echo "    <version>$KERNEL_VERSION</version>" >> $XML_FILE
+            echo "    <date>$BUILD_DATE</date>" >> $XML_FILE
+            echo "    <filename>$KERNEL_FILENAME</filename>" >> $XML_FILE
+            echo "    <link>$KERNEL_LINK</link>" >> $XML_FILE
+            echo "    <md5>$KERNEL_MD5</md5>" >> $XML_FILE
+            echo "    <size>$KERNEL_SIZE</size>" >> $XML_FILE
+            echo "  </kernel>" >> $XML_FILE
+          done
+
+          echo '</roms>' >> $XML_FILE
+          cat $XML_FILE
+
+      - name: Commit and push XML
+        run: |
+          git add $XML_FILE
+          git commit -m "Update $XML_FILE with placeholder parts and kernel blocks for $BUILD_TARGET" || echo "No changes to commit"
+          git push origin main
