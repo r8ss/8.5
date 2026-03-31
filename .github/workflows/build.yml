@@ -129,14 +129,12 @@ jobs:
             VERSION=$(echo "$FILE_NAME" | grep -oP '\d+\.\d+\.\d+')
             BUILD_DATE=$(date +%Y-%m-%d)
 
-            # Always upload to Pixeldrain
             echo "Uploading $FILE_NAME to Pixeldrain..."
             RESPONSE=$(curl -s -T "$file" -u :$PIXELDRAIN_API_KEY https://pixeldrain.com/api/file/)
             FILE_ID=$(echo "$RESPONSE" | jq -r '.id')
             PIXEL_URL="https://pixeldrain.com/u/$FILE_ID"
             echo "Pixeldrain URL: $PIXEL_URL"
 
-            # Split + GitHub Release for release + test
             PART_LINKS=()
             if [ "$BUILD_TYPE" = "release" ] || [ "$BUILD_TYPE" = "test" ]; then
               echo "Splitting $FILE_NAME into 6 parts..."
@@ -165,9 +163,7 @@ jobs:
                 echo "ERROR: Release not created. Check GH_TOKEN and permissions."
                 exit 1
               fi
-              echo "Release created: $RELEASE_ID"
 
-              # Upload all split parts
               for part in split_tmp/*; do
                 PART_NAME=$(basename "$part")
                 UPLOAD_RESPONSE=$(curl -s -X POST \
@@ -180,14 +176,33 @@ jobs:
               done
             fi
 
-            # Generate OTA XML for release only
             if [ "$BUILD_TYPE" = "release" ]; then
               echo "Generating OTA XML..."
               git clone https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} updater_repo
               cd updater_repo
               git checkout main
               mkdir -p updater
+
               XML_FILE="updater/${{ matrix.target }}.xml"
+
+              # Load model array + kernel vars
+              source ../buildenv.sh ${{ matrix.target }}
+
+              # Build kernel blocks
+              KERNEL_BLOCKS=""
+              for MODEL in "${TARGET_ASSERT_MODEL[@]}"; do
+                CLEAN_MODEL="${MODEL#SM-}"
+
+                KERNEL_BLOCKS+="
+  <kernel channel=\"$CLEAN_MODEL\">
+    <version>${KERNEL_VERSION:-0.0.0}</version>
+    <date>$BUILD_DATE</date>
+    <filename>${KERNEL_FILENAME:-kernel.zip}</filename>
+    <link>${KERNEL_LINK:-https://example.com/kernel.zip}</link>
+    <md5>${KERNEL_MD5:-unknown}</md5>
+    <size>${KERNEL_SIZE:-0}</size>
+  </kernel>"
+              done
 
               {
                 echo '<?xml version="1.0" encoding="UTF-8"?>'
@@ -208,13 +223,16 @@ jobs:
                 echo "    <md5>$FILE_MD5</md5>"
                 echo "    <size>$FILE_SIZE</size>"
                 echo '  </rom>'
-                echo '</roms>'
               } >> $XML_FILE
+
+              echo "$KERNEL_BLOCKS" >> $XML_FILE
+              echo '</roms>' >> $XML_FILE
 
               git add $XML_FILE
               git commit -m "updater: ${{ matrix.target }}.xml: Update to $VERSION" || true
               git pull --rebase origin main
               git push origin main
+
               cd ..
             fi
           done
