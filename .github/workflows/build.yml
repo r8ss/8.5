@@ -107,6 +107,7 @@ jobs:
         run: |
           source ./buildenv.sh ${{ matrix.target }}
           ./scripts/make_rom.sh --force
+
       - name: Upload to Pixeldrain, GitHub Release, Split, XML
         env:
           PIXELDRAIN_API_KEY: ${{ secrets.PD_API }}
@@ -186,21 +187,21 @@ jobs:
 
               source ../buildenv.sh ${{ matrix.target }}
 
-              KERNEL_BLOCKS=""
+              # Write kernel blocks directly for each model
               for MODEL in "${TARGET_ASSERT_MODEL[@]}"; do
                 CLEAN_MODEL="${MODEL#SM-}"
 
-                KERNEL_BLOCKS+="
-  <kernel channel=\"$CLEAN_MODEL\">
-    <version>${KERNEL_VERSION:-0.0.0}</version>
-    <date>$BUILD_DATE</date>
-    <filename>${KERNEL_FILENAME:-kernel.zip}</filename>
-    <link>${KERNEL_LINK:-https://example.com/kernel.zip}</link>
-    <md5>${KERNEL_MD5:-unknown}</md5>
-    <size>${KERNEL_SIZE:-0}</size>
-  </kernel>"
+                echo "  <kernel channel=\"$CLEAN_MODEL\">" >> $XML_FILE
+                echo "    <version>${KERNEL_VERSION:-0.0.0}</version>" >> $XML_FILE
+                echo "    <date>$BUILD_DATE</date>" >> $XML_FILE
+                echo "    <filename>${KERNEL_FILENAME:-kernel.zip}</filename>" >> $XML_FILE
+                echo "    <link>${KERNEL_LINK:-https://example.com/kernel.zip}</link>" >> $XML_FILE
+                echo "    <md5>${KERNEL_MD5:-unknown}</md5>" >> $XML_FILE
+                echo "    <size>${KERNEL_SIZE:-0}</size>" >> $XML_FILE
+                echo "  </kernel>" >> $XML_FILE
               done
 
+              # Write main ROM info and parts
               {
                 echo '<?xml version="1.0" encoding="UTF-8"?>'
                 echo '<roms>'
@@ -222,7 +223,6 @@ jobs:
                 echo '  </rom>'
               } >> $XML_FILE
 
-              echo "$KERNEL_BLOCKS" >> $XML_FILE
               echo '</roms>' >> $XML_FILE
 
               git add $XML_FILE
