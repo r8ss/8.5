@@ -66,7 +66,7 @@ index b3b5a4dd..57833ded 100644
 +
 +    if-eqz v0, :cond_0
 +
-+    const-string/jumbo v1, "persist.sys.unica.gphotos"
++    const-string/jumbo v1, "persist.sys.artisanrom.gphotos"
 +
 +    const/4 v2, 0x1
 +
