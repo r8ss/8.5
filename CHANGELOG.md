@@ -12,6 +12,10 @@
 - Switch to EXT4
 - Update Viper4Android to latest
 - Fix Termux Crash on all 990 devices
+- Updated base firmware to S25 FE March Security Patch
+- Add Unlimited Google Photos storage spoof (thx @salvogiangri)
+- Rebrand to ArtisanROM
+- Start to sign Official Releases
 
 # 3.0.7
 - Fix USB Audio
