@@ -294,13 +294,6 @@ if $SOURCE_IS_ESIM_SUPPORTED; then
     fi
 fi
 
-if [ -f "$FW_DIR/${MODEL}_${REGION}/system/system/etc/permissions/com.sec.feature.cover.xml" ]; then
-    LOG_STEP_IN "- Adding LED Case Cover support"
-    ADD_TO_WORK_DIR "t2sxxx" "system" "system/priv-app/LedCoverService/LedCoverService.apk"
-    ADD_TO_WORK_DIR "t2sxxx" "system" "system/etc/permissions/privapp-permissions-com.sec.android.cover.ledcover.xml"
-    LOG_STEP_OUT
-fi
-
 if [ ! -f "$FW_DIR/${MODEL}_${REGION}/vendor/etc/permissions/android.hardware.strongbox_keystore.xml" ]; then
     LOG_STEP_IN "- Applying strongbox patches"
     APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/strongbox/framework.jar/0001-Disable-StrongBox-in-DevRootKeyATCmd.patch"
