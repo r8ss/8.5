@@ -38,6 +38,8 @@ system/priv-app/PetService
 system/priv-app/SCameraSDKService
 system/priv-app/sec_camerax_service
 system/priv-app/VideoScan
+system/priv-app/LedBackCoverAppHubble
+system/priv-app/LedCoverService
 "
 
 # Wi-Fi Hotspot Overlays
