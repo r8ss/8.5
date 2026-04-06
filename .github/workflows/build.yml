@@ -183,7 +183,7 @@ jobs:
             # Generate OTA XML for release only
             if [ "$BUILD_TYPE" = "release" ]; then
               echo "Generating OTA XML..."
-              git clone https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} updater_repo
+              git clone --branch main https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }} updater_repo
               cd updater_repo
               git checkout main
               mkdir -p updater
