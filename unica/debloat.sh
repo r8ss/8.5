@@ -72,6 +72,7 @@ system/app/SamsungPassAutofill_v1
 system/app/SamsungTTSVoice_ar_AE_m00
 system/app/SamsungTTSVoice_de_DE_f00
 system/app/SamsungTTSVoice_en_GB_f00
+system/app/SamsungTTSVoice_en_US_l03
 system/app/SamsungTTSVoice_es_ES_f00
 system/app/SamsungTTSVoice_es_MX_f00
 system/app/SamsungTTSVoice_es_US_f00
@@ -154,6 +155,7 @@ system/priv-app/StickerFaceARAvatar
 system/priv-app/YourPhone_P1_5
 system/app/BixbyWakeup
 system/priv-app/Bixby
+system/priv-app/SVoiceIME
 "
 
 PRISM_DEBLOAT+="
