@@ -1,4 +1,4 @@
-# ExtremeROM changelog
+# ArtisanROM changelog
 
 # 3.1.0
 - Add S10 Series (Exynos9820)
@@ -16,6 +16,8 @@
 - Add Unlimited Google Photos storage spoof (thx @salvogiangri)
 - Rebrand to ArtisanROM
 - Start to sign Official Releases
+- Remove LED case support
+- Debloat all SamsungTTS
 
 # 3.0.7
 - Fix USB Audio
