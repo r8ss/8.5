@@ -1,4 +1,4 @@
-name: Build ExtremeROM
+name: Build ArtisanROM
 
 on:
   workflow_dispatch:
