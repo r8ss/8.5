@@ -1,40 +1,97 @@
+name: "Bug Report"
+description: "Report a reproducible issue with ArtisanROM"
+title: "[BUG] "
+labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for your interest in the project. To make it easier for us to help you, please fill any required information below.
-        Make sure not to submit a duplicate bug report, search for existing bug reports [here](https://github.com/ArtisanROM/ArtisanROM/issues/).
+        Thank you for your interest in ArtisanROM.  
+        To help us resolve your issue efficiently, please provide all required information below.
+
+        Before submitting, make sure this is **not a duplicate report**.  
+        You can search existing issues here: https://github.com/ArtisanROM/ArtisanROM/issues/
+
+        Please ensure you have also read the **Wiki** for known issues, installation steps, and troubleshooting.
   - type: input
     attributes:
       label: "ArtisanROM version:"
       placeholder: 3.1.0-official
     validations:
       required: true
+
   - type: input
     attributes:
       label: "Device name:"
       placeholder: Galaxy S20 5G
     validations:
       required: true
+
   - type: input
     attributes:
       label: "Device model number:"
       placeholder: SM-G981B
     validations:
       required: true
+
   - type: textarea
     attributes:
       label: "KernelSU version:"
-      description: Please also specify if any modules are installed in your device.
+      description: Please also specify if any modules are installed on your device.
       placeholder: |
         KernelSU v3.1.0 with the following modules installed:
         - ZygiskNext
         - LSPosed
     validations:
       required: true
+
   - type: textarea
     attributes:
       label: "Steps to reproduce:"
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Expected behaviour:"
+      placeholder: Describe what *should* happen.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Actual behaviour:"
+      placeholder: Describe what *actually* happens instead.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Logs:"
+      description: Please attach logs obtained via logcat or /proc/last_kmsg (for kernel panics).  
+                   Upload logs using the attachment bar below. Please avoid external links.
+      placeholder: Upload logs here.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Additional context:"
+      placeholder: Add any extra information that may help us diagnose the issue.
+  
+  - type: dropdown
+    attributes:
+      label: "Have you read the Wiki?"
+      description: Please confirm that you have checked the Wiki for known issues and troubleshooting steps.
+      options:
+        - Yes, I have read the Wiki
+        - No, I have not read the Wiki
+    validations:
+      required: true      label: "Steps to reproduce:"
       placeholder: |
         1.
         2.
