@@ -2,42 +2,44 @@ name: "Bug Report"
 description: "Report a reproducible issue with ArtisanROM"
 title: "[BUG] "
 labels: ["bug"]
+
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for your interest in ArtisanROM.  
+        Thank you for your interest in ArtisanROM.
         To help us resolve your issue efficiently, please provide all required information below.
 
-        Before submitting, make sure this is **not a duplicate report**.  
-        You can search existing issues here: https://github.com/ArtisanROM/ArtisanROM/issues/
+        Before submitting, make sure this is **not a duplicate report**.
+        Search existing issues: https://github.com/ArtisanROM/ArtisanROM/issues/
 
-        Please ensure you have also read the **Wiki** for known issues, installation steps, and troubleshooting.
+        Please ensure you have also read the **Wiki** for installation steps, known issues, and troubleshooting.
+
   - type: input
     attributes:
-      label: "ArtisanROM version:"
-      placeholder: 3.1.0-official
+      label: "ArtisanROM version"
+      placeholder: "3.1.0-official"
     validations:
       required: true
 
   - type: input
     attributes:
-      label: "Device name:"
-      placeholder: Galaxy S20 5G
+      label: "Device name"
+      placeholder: "Galaxy S20 5G"
     validations:
       required: true
 
   - type: input
     attributes:
-      label: "Device model number:"
-      placeholder: SM-G981B
+      label: "Device model number"
+      placeholder: "SM-G981B"
     validations:
       required: true
 
   - type: textarea
     attributes:
-      label: "KernelSU version:"
-      description: Please also specify if any modules are installed on your device.
+      label: "KernelSU version"
+      description: "Please specify the KernelSU version and list any installed modules."
       placeholder: |
         KernelSU v3.1.0 with the following modules installed:
         - ZygiskNext
@@ -47,7 +49,7 @@ body:
 
   - type: textarea
     attributes:
-      label: "Steps to reproduce:"
+      label: "Steps to reproduce"
       placeholder: |
         1.
         2.
@@ -57,66 +59,37 @@ body:
 
   - type: textarea
     attributes:
-      label: "Expected behaviour:"
-      placeholder: Describe what *should* happen.
+      label: "Expected behaviour"
+      placeholder: "Describe what should happen."
     validations:
       required: true
 
   - type: textarea
     attributes:
-      label: "Actual behaviour:"
-      placeholder: Describe what *actually* happens instead.
+      label: "Actual behaviour"
+      placeholder: "Describe what happens instead."
     validations:
       required: true
 
   - type: textarea
     attributes:
-      label: "Logs:"
-      description: Please attach logs obtained via logcat or /proc/last_kmsg (for kernel panics).  
-                   Upload logs using the attachment bar below. Please avoid external links.
-      placeholder: Upload logs here.
+      label: "Logs"
+      description: "Attach logcat output or /proc/last_kmsg. Upload logs below; avoid external links."
+      placeholder: "Upload logs here."
     validations:
       required: true
 
   - type: textarea
     attributes:
-      label: "Additional context:"
-      placeholder: Add any extra information that may help us diagnose the issue.
-  
+      label: "Additional context"
+      placeholder: "Add any extra information that may help diagnose the issue."
+
   - type: dropdown
     attributes:
       label: "Have you read the Wiki?"
-      description: Please confirm that you have checked the Wiki for known issues and troubleshooting steps.
+      description: "Confirm that you checked the Wiki for troubleshooting before opening this issue."
       options:
-        - Yes, I have read the Wiki
-        - No, I have not read the Wiki
-    validations:
-      required: true      label: "Steps to reproduce:"
-      placeholder: |
-        1.
-        2.
-        3.
+        - "Yes, I have read the Wiki and other Issues"
+        - "No, I have not read the Wiki and other Issues"
     validations:
       required: true
-  - type: textarea
-    attributes:
-      label: "Expected behaviour:"
-      placeholder: Describe what should happen.
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: "Actual behaviour:"
-      placeholder: Describe what happens instead.
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: "Logs:"
-      description: Please provide logs obtained via [logcat](https://developer.android.com/tools/logcat) or your /proc/last_kmsg file in case of kernel panics.
-      placeholder: Upload logs by clicking the bar on the bottom. Please avoid uploading logs to other websites or using external links.
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: "Additional context:"
