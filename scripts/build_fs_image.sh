@@ -159,9 +159,6 @@ PREPARE_SCRIPT()
 if [[ "$*" == *"optics"* || "$*" == *"prism"* || "$*" == *"odm"* ]]; then
     FS_TYPE="ext4"
     echo ""
-else
-    FS_TYPE="erofs"
-    echo ""
 fi
     if [[ "$FS_TYPE" != "ext4" ]] && \
             [[ "$FS_TYPE" != "f2fs" ]] && \
