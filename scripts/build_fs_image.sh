@@ -152,14 +152,7 @@ PREPARE_SCRIPT()
         exit 1
     fi
 
-# Get the partition name (Usually passed as the second argument, adapt if your script uses a specific variable like $PARTITION)
-# We force EROFS for main partitions to save space and fix size issues,
-# but we MUST keep optics and prism as EXT4, otherwise fstab fails to mount them and CSC breaks.
-
-if [[ "$*" == *"optics"* || "$*" == *"prism"* || "$*" == *"odm"* ]]; then
-    FS_TYPE="ext4"
-    echo ""
-fi
+    FS_TYPE="$1"
     if [[ "$FS_TYPE" != "ext4" ]] && \
             [[ "$FS_TYPE" != "f2fs" ]] && \
             [[ "$FS_TYPE" != "erofs" ]]; then
