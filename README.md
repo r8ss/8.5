@@ -93,6 +93,7 @@ This project is licensed under the terms of the [GNU General Public License v3.0
 - **[Mesazane](https://github.com/Mesazane)** for testing and helping with the updaters design, and for updating and fixing KernelSU-Next on the Kernels
 - **[ricci205GTI](https://github.com/ricci205GTI)** for fixing motion photo and help with the x1s.
 - **[immohammeeed](https://github.com/immohammeeed)** for creating the website for this project.
+- **[3q5i](https://github.com/3q5i)** for support and ideas for the ROM
 - More that I can't remember right now and will have to be added in the future
 
 ## Original ExtremeROM credits:
