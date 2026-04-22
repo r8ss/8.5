@@ -116,5 +116,5 @@ fi
 
 # https://github.com/duhansysl/Bluetooth-Library-Patcher/blob/67e598ad142ed296b487a7a4585927c993d4f35d/hexpatcher.sh#L43
 HEX_PATCH "$WORK_DIR/system/system/lib64/libbluetooth_jni.so" \
-    "00122a0140395f01086bde030014" "2a00001428008052"
+    "289767394805003736008052" "289767392a00001436008052"
 
