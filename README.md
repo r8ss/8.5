@@ -97,6 +97,7 @@ This project is licensed under the terms of the [GNU General Public License v3.0
 - **[Majaahh](https://github.com/Majaahh)** for help and support.
 - **[irvinhaha](https://github.com/irvinhaha)** for designing many banners and logos
 - **[CiprianDinca](https://github.com/CiprianDinca9)** for custom ExtremeROM ringtones
+- **[Dupazlasu/Milxnaq](https://github.com/milxnaq)** for fixing bluetooth on the S10x
 - More that I can't remember right now and will have to be added in the future
 
 ## Original ExtremeROM credits:
