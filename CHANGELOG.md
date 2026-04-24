@@ -1,5 +1,11 @@
 # ArtisanROM changelog
 
+# nxt
+- Fix Bluetooth on 9820 (thx @dupazlasu/@milxnaq)
+- Update kernels to KSU Next v3.2.0
+- Debloat SamsungTTS completely.
+- Keep EroFS Partitions
+
 # 3.1.0
 - Add S10 Series (Exynos9820)
 - Add Custom ExtremeROM Ringtones and Startup/Shutdown sounds (thx @Ronan & Lindir Music)
