@@ -1,6 +1,6 @@
 # ArtisanROM changelog
 
-# nxt
+# 3.1.1
 - Fix Bluetooth on 9820 (thx @dupazlasu/@milxnaq)
 - Update kernels to KSU Next v3.2.0
 - Debloat SamsungTTS completely.
