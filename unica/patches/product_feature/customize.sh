@@ -74,9 +74,9 @@ if [[ "$SOURCE_FP_SENSOR_CONFIG" != "$TARGET_FP_SENSOR_CONFIG" ]]; then
     system/framework/framework.jar/smali_classes6/com/samsung/android/bio/fingerprint/SemFingerprintManager.smali
     system/framework/framework.jar/smali_classes6/com/samsung/android/bio/fingerprint/SemFingerprintManager\$Characteristics.smali
     system/framework/framework.jar/smali_classes6/com/samsung/android/rune/InputRune.smali
-    system/priv-app/SecSettings/SecSettings.apk/smali_classes4/com/samsung/android/settings/biometrics/fingerprint/FingerprintEntry.smali
-    system/priv-app/SecSettings/SecSettings.apk/smali_classes4/com/samsung/android/settings/biometrics/fingerprint/FingerprintLockSettings.smali
-    system/priv-app/SecSettings/SecSettings.apk/smali_classes4/com/samsung/android/settings/biometrics/fingerprint/FingerprintSettingsUtils.smali
+    system/priv-app/SecSettings/SecSettings.apk/smali_classes5/com/samsung/android/settings/biometrics/fingerprint/FingerprintEntry.smali
+    system/priv-app/SecSettings/SecSettings.apk/smali_classes5/com/samsung/android/settings/biometrics/fingerprint/FingerprintLockSettings.smali
+    system/priv-app/SecSettings/SecSettings.apk/smali_classes5/com/samsung/android/settings/biometrics/fingerprint/FingerprintSettingsUtils.smali
     "
     for f in $FTP; do
         sed -i "s/$SOURCE_FP_SENSOR_CONFIG/$TARGET_FP_SENSOR_CONFIG/g" "$APKTOOL_DIR/$f"
