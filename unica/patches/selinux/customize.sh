@@ -2,8 +2,18 @@
 # - Append new type entries to the ENTRIES list
 # - Add the EXACT type entry, DO NOT just add a common pattern (eg. "fabriccrypto", "fabriccrypto_exec" and NOT just "fabriccrypto")
 # - DO NOT add the API version at the end of the entry (eg. "fabriccrypto" and NOT "fabriccrypto_30_0")
-# - DO NOT add add any parenthesis or statements (eg. "fabriccrypto" and NOT "expanttypeattribute ... (fabriccrypto)")
+# - DO NOT add any parenthesis or statements (eg. "fabriccrypto" and NOT "expanttypeattribute ... (fabriccrypto)")
 # - DO NOT add unnecessary types or remove the existing ones unless they aren't necessary anymore for all devices
+
+# One UI 8.0 additions
+ENTRIES+="
+heatmap_default
+heatmap_default_exec
+"
+
+DUPLICATES+="
+init.svc.vendor.wvkprov_server_hal
+"
 
 # One UI 7.0 additions
 ENTRIES+="
@@ -35,17 +45,10 @@ hal_dsms_service
 uwb_regulation_skip_prop
 "
 
-# One UI 5.0.0 additions
-ENTRIES+="
-perf_prop
-qb_id_prop
-teeregistryd_app
-"
-
 # [
 GET_SYSTEM_EXT()
 {
-    if $TARGET_HAS_SYSTEM_EXT; then
+    if $TARGET_OS_BUILD_SYSTEM_EXT_PARTITION; then
         echo "system_ext"
     else
         echo "system/system/system_ext"
@@ -53,7 +56,7 @@ GET_SYSTEM_EXT()
 }
 
 CIL_NAME="$(head -n 1 "$WORK_DIR/vendor/etc/selinux/plat_sepolicy_vers.txt")"
-
+PATCHED=false
 VENDOR_API_LIST="$(find "$WORK_DIR/$(GET_SYSTEM_EXT)/etc/selinux/mapping" -type f -printf "%f\n" | \
                     sed '/.compat./d' | sed 's/.cil//' | sed 's/\./_/' | sort)"
 # ]
@@ -63,6 +66,7 @@ for e in $ENTRIES; do
          grep -q -F "${e}_${CIL_NAME//./_}" "$WORK_DIR/$(GET_SYSTEM_EXT)/etc/selinux/mapping/$CIL_NAME.cil"; then
         # the problematic entry is currently present in system_ext, check if we need to remove it
         if ! grep -q -F "(type $e)" "$WORK_DIR/vendor/etc/selinux/plat_pub_versioned.cil"; then
+            PATCHED=true
             # the problematic entry is not supported by the target device
             LOG "- \"$e\" SELinux entry not supported. Removing"
             sed -i "/($e)/d" "$WORK_DIR/$(GET_SYSTEM_EXT)/etc/selinux/mapping/$CIL_NAME.cil"
@@ -78,3 +82,22 @@ for e in $ENTRIES; do
         fi
     fi
 done
+
+for e in $DUPLICATES; do
+    if grep -q "^$e.*" "$WORK_DIR/$(GET_SYSTEM_EXT)/etc/selinux/system_ext_property_contexts"; then
+        # the problematic entry is currently present in system_ext, check if we need to remove it
+        if grep -q "^$e.*" "$WORK_DIR/vendor/etc/selinux/vendor_property_contexts"; then
+            PATCHED=true
+            # the problematic entry is found in target vendor
+            LOG "- \"$e\" SELinux duplicate entry found. Removing"
+            sed -i "s/^$e/#SEC_DUPLICATE: $e/g" "$WORK_DIR/vendor/etc/selinux/vendor_property_contexts"
+        fi
+    fi
+done
+
+if ! $PATCHED; then
+    LOG "\033[0;33m! Nothing to do\033[0m"
+fi
+
+unset ENTRIES DUPLICATES CIL_NAME PATCHED VENDOR_API_LIST
+unset -f GET_SYSTEM_EXT

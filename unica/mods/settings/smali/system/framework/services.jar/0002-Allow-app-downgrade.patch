@@ -1,61 +1,39 @@
-From cbc2be65f9f554d46436dd3a07e095df602cf79a Mon Sep 17 00:00:00 2001
+From ac0f6eee59ec999f7eb5c8fe30fdef30f18c5583 Mon Sep 17 00:00:00 2001
 From: Salvo Giangreco <giangrecosalvo9@gmail.com>
-Date: Fri, 6 Jun 2025 21:40:35 +0300
+Date: Fri, 24 Oct 2025 14:45:06 +0200
 Subject: [PATCH] Allow app downgrade
 
-Signed-off-by: ExtremeXT <75576145+ExtremeXT@users.noreply.github.com>
 ---
- .../pm/PackageManagerServiceUtils.smali       | 35 ++-----------------
- 1 file changed, 2 insertions(+), 33 deletions(-)
+ .../server/pm/PackageManagerService.smali        | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/smali_classes2/com/android/server/pm/PackageManagerServiceUtils.smali b/smali_classes2/com/android/server/pm/PackageManagerServiceUtils.smali
-index 3e59bc3b..1e218a36 100644
---- a/smali_classes2/com/android/server/pm/PackageManagerServiceUtils.smali
-+++ b/smali_classes2/com/android/server/pm/PackageManagerServiceUtils.smali
-@@ -2322,41 +2322,10 @@
- .end method
+diff --git a/smali_classes2/com/android/server/pm/PackageManagerService.smali b/smali_classes2/com/android/server/pm/PackageManagerService.smali
+index 773266ffc..eb0880764 100644
+--- a/smali_classes2/com/android/server/pm/PackageManagerService.smali
++++ b/smali_classes2/com/android/server/pm/PackageManagerService.smali
+@@ -22001,6 +22001,22 @@
  
- .method public static isDowngradePermitted(IZ)Z
--    .locals 3
--
--    and-int/lit16 v0, p0, 0x80
--
--    const/4 v1, 0x0
--
--    if-eqz v0, :cond_3
--
--    sget-boolean v0, Landroid/os/Build;->IS_DEBUGGABLE:Z
--
--    const/4 v2, 0x1
--
--    if-nez v0, :cond_2
--
--    if-eqz p1, :cond_0
--
--    goto :goto_0
--
--    :cond_0
--    const/high16 p1, 0x100000
--
--    and-int/2addr p0, p1
--
--    if-eqz p0, :cond_1
--
--    return v2
--
--    :cond_1
--    return v1
-+    .locals 1
+     if-nez v0, :cond_b
  
--    :cond_2
--    :goto_0
--    return v2
-+    const/4 v0, 0x1
- 
--    :cond_3
-     return v1
- .end method
++    iget-object v0, v2, Lcom/android/server/pm/InstallPackageHelper;->mContext:Landroid/content/Context;
++
++    invoke-virtual {v0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
++
++    move-result-object v0
++
++    const-string v3, "unica_allow_downgrade"
++
++    const/4 v4, 0x0
++
++    invoke-static {v0, v3, v4}, Landroid/provider/Settings$System;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
++
++    move-result v0
++
++    if-nez v0, :cond_b
++
+     :try_start_3
+     invoke-interface {v10}, Lcom/android/server/pm/pkg/AndroidPackage;->getLongVersionCode()J
  
 -- 
-2.49.1
+2.51.1
 

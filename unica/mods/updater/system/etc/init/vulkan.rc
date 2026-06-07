@@ -1,2 +1,0 @@
-on zygote-start && property:persist.sys.artisanrom.vulkan=true
-    setprop debug.hwui.renderer skiavk
